@@ -318,11 +318,110 @@
     </section>
 
 
+    <!-- comment setion -->
+
+     <section class="social-section" id="comments">
+
+        <h2>COMMENTS</h2>
+
+        <div style="max-width:700px;margin:auto;background:rgba(255,255,255,0.07);padding:40px;border-radius:20px;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.1);">
+
+            <form>
+
+                <input type="text" placeholder="Enter Your Name"
+                style="width:100%;padding:15px;margin-bottom:20px;border:none;border-radius:12px;font-size:16px;outline:none;">
+
+                <input type="email" placeholder="Enter Your Email"
+                style="width:100%;padding:15px;margin-bottom:20px;border:none;border-radius:12px;font-size:16px;outline:none;">
+
+                <textarea placeholder="Write Your Comment Here..."
+                rows="6"
+                style="width:100%;padding:15px;border:none;border-radius:12px;font-size:16px;outline:none;resize:none;margin-bottom:20px;"></textarea>
+
+                <button type="submit"
+                style="padding:15px 35px;background:#00ffcc;border:none;border-radius:40px;font-size:18px;font-weight:bold;cursor:pointer;transition:0.3s;">
+                    Submit Comment
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
     <!-- FOOTER -->
 
     <footer>
-        © 2026 Cockroach Janta Party | Designed BY ABHAY SAHANI
+        © 2026 Cockroach Janta Party | Designed by abhay sahani
     </footer>
+     
+    <!-- backend -->
+
+    <script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCoYdE0IDs-gsw2db-6MDoOBpEnT6Abi6g",
+  authDomain: "cocro-17cc7.firebaseapp.com",
+  projectId: "cocro-17cc7",
+  storageBucket: "cocro-17cc7.firebasestorage.app",
+  messagingSenderId: "410065847974",
+  appId: "1:410065847974:web:8a2b10b794dca6e6451667",
+  measurementId: "G-GXWNXR40FK"
+  };
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+
+const form = document.querySelector("form");
+
+form.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    const name = form.querySelector('input[type=\"text\"]').value;
+
+    const email = form.querySelector('input[type=\"email\"]').value;
+
+    const comment = form.querySelector('textarea').value;
+
+    try {
+
+        await addDoc(collection(db, "comments"), {
+
+            name: name,
+            email: email,
+            comment: comment,
+            time: new Date()
+
+        });
+
+        alert("Comment Submitted Successfully!");
+
+        form.reset();
+
+    } catch (error) {
+
+        alert("Error: " + error);
+
+    }
+
+});
+
+</script>
+
+
 
 </body>
 </html>
